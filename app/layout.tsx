@@ -6,6 +6,13 @@ export const metadata = {
   description: 'Shreyansh Tehanguria - Software Engineer. A retro 1980s computer terminal themed portfolio website',
 }
 
+export const viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 1,
+  userScalable: false,
+}
+
 export default function RootLayout({
   children,
 }: {

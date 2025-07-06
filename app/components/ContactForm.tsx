@@ -52,8 +52,8 @@ const ContactForm: React.FC = () => {
   }
 
   return (
-    <div className="border border-terminal-fg p-4 h-fit">
-      <div className="font-bold mb-3 glow">SEND_MESSAGE.EXE</div>
+    <div className="border border-terminal-fg p-3 sm:p-4 h-fit">
+      <div className="font-bold mb-3 glow text-sm sm:text-base">SEND_MESSAGE.EXE</div>
       
       {status === 'SUCCESS' && (
         <div className="mb-3 p-2 border border-terminal-fg bg-terminal-bg text-terminal-fg text-xs">
@@ -79,7 +79,7 @@ const ContactForm: React.FC = () => {
             value={formData.name}
             onChange={handleChange}
             required
-            className="w-full bg-terminal-bg border border-terminal-fg p-2 text-terminal-fg text-sm focus:outline-none focus:border-terminal-white"
+            className="w-full bg-terminal-bg border border-terminal-fg p-3 sm:p-2 text-terminal-fg text-sm focus:outline-none focus:border-terminal-white touch-manipulation"
             placeholder="Your Name"
             disabled={isLoading}
           />
@@ -93,7 +93,7 @@ const ContactForm: React.FC = () => {
             value={formData.email}
             onChange={handleChange}
             required
-            className="w-full bg-terminal-bg border border-terminal-fg p-2 text-terminal-fg text-sm focus:outline-none focus:border-terminal-white"
+            className="w-full bg-terminal-bg border border-terminal-fg p-3 sm:p-2 text-terminal-fg text-sm focus:outline-none focus:border-terminal-white touch-manipulation"
             placeholder="your.email@domain.com"
             disabled={isLoading}
           />
@@ -107,7 +107,7 @@ const ContactForm: React.FC = () => {
             value={formData.subject}
             onChange={handleChange}
             required
-            className="w-full bg-terminal-bg border border-terminal-fg p-2 text-terminal-fg text-sm focus:outline-none focus:border-terminal-white"
+            className="w-full bg-terminal-bg border border-terminal-fg p-3 sm:p-2 text-terminal-fg text-sm focus:outline-none focus:border-terminal-white touch-manipulation"
             placeholder="Opportunity | Collaboration | Question"
             disabled={isLoading}
           />
@@ -121,7 +121,7 @@ const ContactForm: React.FC = () => {
             onChange={handleChange}
             required
             rows={4}
-            className="w-full bg-terminal-bg border border-terminal-fg p-2 text-terminal-fg text-sm focus:outline-none focus:border-terminal-white resize-none"
+            className="w-full bg-terminal-bg border border-terminal-fg p-3 sm:p-2 text-terminal-fg text-sm focus:outline-none focus:border-terminal-white resize-none touch-manipulation"
             placeholder="Your message..."
             disabled={isLoading}
           />
@@ -130,7 +130,7 @@ const ContactForm: React.FC = () => {
         <button 
           type="submit"
           disabled={isLoading}
-          className={`w-full p-2 text-sm font-bold transition-colors ${
+          className={`w-full p-3 sm:p-2 text-sm font-bold transition-colors touch-manipulation ${
             isLoading 
               ? 'bg-terminal-gray text-terminal-bg cursor-not-allowed' 
               : 'bg-terminal-fg text-terminal-bg hover:bg-terminal-white'

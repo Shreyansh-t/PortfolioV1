@@ -14,6 +14,15 @@ interface Command {
   path: string
 }
 
+interface FileSystemNode {
+  files: string[]
+  directories: string[]
+}
+
+interface FileSystem {
+  [key: string]: FileSystemNode
+}
+
 const Terminal: React.FC<TerminalProps> = ({ currentPath, setCurrentPath, setIsTerminalMode }) => {
   const [history, setHistory] = useState<Command[]>([])
   const [currentInput, setCurrentInput] = useState('')
@@ -21,7 +30,7 @@ const Terminal: React.FC<TerminalProps> = ({ currentPath, setCurrentPath, setIsT
   const inputRef = useRef<HTMLInputElement>(null)
   const terminalRef = useRef<HTMLDivElement>(null)
 
-  const fileSystem = {
+  const fileSystem: FileSystem = {
     '~': {
       files: ['about.txt', 'resume.pdf', 'README.md'],
       directories: ['projects', 'experience', 'blog', 'contact']
@@ -58,19 +67,95 @@ const Terminal: React.FC<TerminalProps> = ({ currentPath, setCurrentPath, setIsT
     ],
     
     ls: () => {
-      const current = fileSystem[currentPath as keyof typeof fileSystem]
-      if (!current) return ['Directory not found']
-      
-      const items = []
-      if (current.directories.length > 0) {
-        items.push('Directories:')
-        current.directories.forEach(dir => items.push(`  ${dir}/`))
+      // Context-aware listing based on current path
+      switch (currentPath) {
+        case 'experience':
+          return [
+            'WORK EXPERIENCE:',
+            '================',
+            '',
+            '1. AI_ENGINEER_INTERN',
+            '   Company: Legalgini | Location: Gurugram, India | Duration: Jan 2025 – May 2025',
+            '   • CoLBERT-based RAG pipeline: 70% → 96% accuracy improvement',
+            '   • Gemini Flash LLM integration: 40% engagement boost',
+            '',
+            '2. AUTONOMOUS_SYSTEMS_RESEARCHER', 
+            '   Prof. J.M Goppert - Purdue University | Duration: Jan 2025 – May 2025',
+            '   • A*, RRT, RRT* navigation algorithms for NARCAN-delivery drone',
+            '   • 30% computational load reduction',
+            '',
+            '3. PROJECT_MANAGER_&_TA',
+            '   Purdue University | Duration: Aug 2023 – May 2024',
+            '   • Led team of 7 researchers across 40 states',
+            '   • LSTM sentiment analysis: 95% accuracy',
+            '',
+            '4. DATA_SCIENCE_RESEARCHER',
+            '   Purdue University | Duration: Aug 2022 – May 2023',
+            '   • Agricultural sensor data: 30,000+ points per variable',
+            '   • Optimized data sampling for processing efficiency'
+          ]
+        
+        case 'projects':
+          return [
+            'PROJECTS:',
+            '=========',
+            '',
+            '1. BoilerFixIt [ONGOING]',
+            '   Tech: MERN, Redis, Stripe, Google Maps API',
+            '   → Full-stack platform for Purdue students',
+            '',
+            '2. Concurrent Key-Value Caching Engine [COMPLETED]',
+            '   Tech: C++, Non-blocking I/O, Event Loops',
+            '   → 40% performance improvement over standard systems',
+            '',
+            '3. Airbnb Price Tracker [COMPLETED]', 
+            '   Tech: Python, Django, Selenium, BeautifulSoup, MySQL',
+            '   → Monitoring 50+ properties with 12-hour intervals'
+          ]
+        
+        case 'blog':
+          return [
+            'BLOG POSTS:',
+            '===========',
+            '',
+            '1. ColBERT Made Simple: Step-by-Step PDF Search Engine with LangChain and RAGatouille',
+            '   Date: Dec 2024 | Category: AI/ML',
+            '   → Comprehensive guide to building PDF search engines',
+            '   → Read: https://medium.com/@shreyanshtehanguria'
+          ]
+        
+        case 'contact':
+          return [
+            'CONTACT INFORMATION:',
+            '===================',
+            '',
+            'EMAIL: stehangu@purdue.edu',
+            'GITHUB: @shreyanshtehanguria',
+            'LINKEDIN: linkedin.com/in/shreyanshtehanguria',
+            '',
+            'AVAILABILITY:',
+            '• Seeking internships & full-time SWE/ML/DS/AI roles',
+            '• Response time: 2-4 hours',
+            '• Location: West Lafayette, Indiana'
+          ]
+        
+        default: // Home directory
+          return [
+            'SHREYANSH TEHANGURIA - PORTFOLIO TERMINAL',
+            '========================================',
+            '',
+            'Rising Senior in Data Science @ Purdue University',
+            'SWE by projects, Data Scientist by degree, AI Engineer by experience',
+            '',
+            'QUICK NAVIGATION:',
+            '• cd experience  - View work history & skills',
+            '• cd projects    - Explore technical projects', 
+            '• cd blog        - Read technical articles',
+            '• cd contact     - Get in touch',
+            '',
+            'CURRENT FOCUS: AI + Systems intersection, Performance optimization'
+          ]
       }
-      if (current.files.length > 0) {
-        items.push('Files:')
-        current.files.forEach(file => items.push(`  ${file}`))
-      }
-      return items.length > 0 ? items : ['Empty directory']
     },
     
     pwd: () => [`/${currentPath}`],
@@ -90,7 +175,7 @@ const Terminal: React.FC<TerminalProps> = ({ currentPath, setCurrentPath, setIsT
         return ['Already at root directory']
       }
       
-      const current = fileSystem[currentPath as keyof typeof fileSystem]
+      const current = fileSystem[currentPath]
       if (current?.directories.includes(target)) {
         setCurrentPath(target)
         return [`Changed to /${target}`]
@@ -103,7 +188,7 @@ const Terminal: React.FC<TerminalProps> = ({ currentPath, setCurrentPath, setIsT
       if (args.length === 0) return ['cat: missing file operand']
       
       const fileName = args[0]
-      const current = fileSystem[currentPath as keyof typeof fileSystem]
+      const current = fileSystem[currentPath]
       
       if (!current?.files.includes(fileName)) {
         return [`cat: ${fileName}: No such file`]
@@ -372,42 +457,42 @@ const Terminal: React.FC<TerminalProps> = ({ currentPath, setCurrentPath, setIsT
   }, [])
 
   return (
-    <div className="border border-terminal-fg border-glow bg-terminal-bg p-4 h-96 overflow-hidden">
+    <div className="border border-terminal-fg border-glow bg-terminal-bg p-3 sm:p-4 h-80 sm:h-96 overflow-hidden">
       <div className="text-xs mb-2 text-terminal-gray">
         TERMINAL v1.0 - Type 'help' for commands
       </div>
       
       <div 
         ref={terminalRef}
-        className="h-80 overflow-y-auto scrollbar-thin scrollbar-thumb-terminal-fg"
+        className="h-64 sm:h-80 overflow-y-auto scrollbar-thin scrollbar-thumb-terminal-fg"
       >
         {history.map((cmd, index) => (
           <div key={index} className="mb-2">
-            <div className="flex items-center">
-              <span className="text-terminal-gray mr-2">shreyansh@portfolio:</span>
-              <span className="text-terminal-fg mr-2">/{cmd.path}</span>
-              <span className="text-terminal-gray mr-2">$</span>
-              <span className="text-terminal-white">{cmd.input}</span>
+            <div className="flex items-center flex-wrap text-xs sm:text-sm">
+              <span className="text-terminal-gray mr-1 sm:mr-2">shreyansh@portfolio:</span>
+              <span className="text-terminal-fg mr-1 sm:mr-2">/{cmd.path}</span>
+              <span className="text-terminal-gray mr-1 sm:mr-2">$</span>
+              <span className="text-terminal-white break-all">{cmd.input}</span>
             </div>
             {cmd.output.map((line, lineIndex) => (
-              <div key={lineIndex} className="text-terminal-fg ml-4">
+              <div key={lineIndex} className="text-terminal-fg ml-2 sm:ml-4 text-xs sm:text-sm break-all">
                 {line}
               </div>
             ))}
           </div>
         ))}
         
-        <form onSubmit={handleSubmit} className="flex items-center">
-          <span className="text-terminal-gray mr-2">shreyansh@portfolio:</span>
-          <span className="text-terminal-fg mr-2">/{currentPath}</span>
-          <span className="text-terminal-gray mr-2">$</span>
+        <form onSubmit={handleSubmit} className="flex items-center flex-wrap text-xs sm:text-sm">
+          <span className="text-terminal-gray mr-1 sm:mr-2">shreyansh@portfolio:</span>
+          <span className="text-terminal-fg mr-1 sm:mr-2">/{currentPath}</span>
+          <span className="text-terminal-gray mr-1 sm:mr-2">$</span>
           <input
             ref={inputRef}
             type="text"
             value={currentInput}
             onChange={(e) => setCurrentInput(e.target.value)}
             onKeyDown={handleKeyDown}
-            className="flex-1 bg-transparent border-none outline-none text-terminal-white"
+            className="flex-1 min-w-0 bg-transparent border-none outline-none text-terminal-white text-xs sm:text-sm"
             autoFocus
           />
           <span className="text-terminal-cursor animate-blink">█</span>
