@@ -36,7 +36,7 @@ const Terminal: React.FC<TerminalProps> = ({ currentPath, setCurrentPath, setIsT
       directories: ['projects', 'experience', 'blog', 'contact']
     },
     'projects': {
-      files: ['boilerfixit.md', 'caching-engine.cpp', 'airbnb-tracker.py', 'README.md'],
+      files: ['trading-engine.cpp', 'boilerfixit.md', 'caching-engine.cpp', 'airbnb-tracker.py', 'README.md'],
       directories: ['web-apps', 'systems', 'data-tools']
     },
     'experience': {
@@ -100,15 +100,20 @@ const Terminal: React.FC<TerminalProps> = ({ currentPath, setCurrentPath, setIsT
             'PROJECTS:',
             '=========',
             '',
-            '1. BoilerFixIt [ONGOING]',
+            '1. Low-Latency C++ Trading Engine [COMPLETED]',
+            '   Tech: C++, AF_XDP, Lock-free Queues, Kernel Bypass',
+            '   → 200K match events/sec, 5.2M market data updates/sec',
+            '   → Memory pool optimization: 343→44 CPU cycles/op',
+            '',
+            '2. BoilerFixIt [ONGOING]',
             '   Tech: MERN, Redis, Stripe, Google Maps API',
             '   → Full-stack platform for Purdue students',
             '',
-            '2. Concurrent Key-Value Caching Engine [COMPLETED]',
+            '3. Concurrent Key-Value Caching Engine [COMPLETED]',
             '   Tech: C++, Non-blocking I/O, Event Loops',
             '   → 40% performance improvement over standard systems',
             '',
-            '3. Airbnb Price Tracker [COMPLETED]', 
+            '4. Airbnb Price Tracker [COMPLETED]', 
             '   Tech: Python, Django, Selenium, BeautifulSoup, MySQL',
             '   → Monitoring 50+ properties with 12-hour intervals'
           ]

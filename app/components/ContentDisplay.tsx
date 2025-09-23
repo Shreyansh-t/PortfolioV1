@@ -104,7 +104,26 @@ const ContentDisplay: React.FC<ContentDisplayProps> = ({ currentPath }) => {
             </div>
             <div className="space-y-4">
               <div className="border border-terminal-fg p-3">
-                <div className="font-bold text-sm sm:text-base">PROJECT_001: BoilerFixIt</div>
+                <div className="font-bold text-sm sm:text-base">PROJECT_001: Low-Latency C++ Trading Engine</div>
+                <div className="text-xs sm:text-sm text-terminal-gray">
+                  Tech: C++, AF_XDP, Lock-free Queues, Kernel Bypass | Status: COMPLETED | Duration: June 2025 – August 2025
+                </div>
+                <div className="text-xs sm:text-sm mt-2">
+                  High-performance trading exchange engineered for ultra-low latency operations. Built with lock-free queues 
+                  and custom memory pools, achieving 200K match events/sec and 1K inserts/sec under synthetic load. 
+                  Implemented kernel network stack bypass using AF_XDP sockets for TX path with custom ethernet frame headers, 
+                  boosting market data throughput from 1.2M to 5.2M updates/sec. Optimized memory pool performance from 
+                  343 to 44 CPU cycles per operation through advanced memory management techniques.
+                </div>
+                <div className="text-xs mt-2">
+                  <a href="https://github.com/Shreyansh-t/kernel-bypass-trading-exchange" className="text-terminal-fg hover:text-terminal-white break-all">
+                    → github.com/Shreyansh-t/kernel-bypass-trading-exchange
+                  </a>
+                </div>
+              </div>
+              
+              <div className="border border-terminal-fg p-3">
+                <div className="font-bold text-sm sm:text-base">PROJECT_002: BoilerFixIt</div>
                 <div className="text-xs sm:text-sm text-terminal-gray">
                   Tech: MERN, Redis, Stripe, Google Maps API | Status: ONGOING
                 </div>
@@ -121,7 +140,7 @@ const ContentDisplay: React.FC<ContentDisplayProps> = ({ currentPath }) => {
               </div>
               
               <div className="border border-terminal-fg p-3">
-                <div className="font-bold text-sm sm:text-base">PROJECT_002: Concurrent Key-Value Caching Engine</div>
+                <div className="font-bold text-sm sm:text-base">PROJECT_003: Concurrent Key-Value Caching Engine</div>
                 <div className="text-xs sm:text-sm text-terminal-gray">
                   Tech: C++, Non-blocking I/O, Event Loops | Status: COMPLETED
                 </div>
@@ -138,7 +157,7 @@ const ContentDisplay: React.FC<ContentDisplayProps> = ({ currentPath }) => {
               </div>
               
               <div className="border border-terminal-fg p-3">
-                <div className="font-bold text-sm sm:text-base">PROJECT_003: Airbnb Price Tracker</div>
+                <div className="font-bold text-sm sm:text-base">PROJECT_004: Airbnb Price Tracker</div>
                 <div className="text-xs sm:text-sm text-terminal-gray">
                   Tech: Python, Django, Selenium, BeautifulSoup, MySQL | Status: COMPLETED
                 </div>
