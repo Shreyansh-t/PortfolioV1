@@ -13,11 +13,12 @@ module.exports = {
       },
       colors: {
         'terminal': {
-          'bg': '#000000',
-          'fg': '#00ff00',
-          'white': '#ffffff',
-          'gray': '#808080',
-          'cursor': '#00ff00',
+          'bg': '#1A1610',
+          'fg': '#C29F6C',
+          'amber': '#FFC373',
+          'white': '#E8D5B0',
+          'gray': '#8B7355',
+          'cursor': '#FFC373',
         }
       },
       animation: {

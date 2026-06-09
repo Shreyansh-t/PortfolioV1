@@ -26,7 +26,7 @@ const Navigation: React.FC<NavigationProps> = ({ currentPath, setCurrentPath }) 
             onClick={() => setCurrentPath(item.path)}
             className={`px-2 sm:px-3 py-2 text-xs sm:text-sm touch-manipulation hover:bg-terminal-fg hover:text-terminal-bg transition-colors ${
               currentPath === item.path
-                ? 'bg-terminal-fg text-terminal-bg'
+                ? 'bg-terminal-amber text-terminal-bg'
                 : 'text-terminal-fg'
             }`}
           >

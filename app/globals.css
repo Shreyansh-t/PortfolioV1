@@ -5,10 +5,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
 
 :root {
-  --terminal-bg: #000000;
-  --terminal-fg: #00ff00;
-  --terminal-white: #ffffff;
-  --terminal-gray: #808080;
+  --terminal-bg: #1A1610;
+  --terminal-fg: #C29F6C;
+  --terminal-white: #E8D5B0;
+  --terminal-gray: #8B7355;
 }
 
 * {
@@ -59,8 +59,8 @@ a {
   background: linear-gradient(
     transparent 0%,
     transparent 48%,
-    rgba(0, 255, 0, 0.03) 49%,
-    rgba(0, 255, 0, 0.03) 50%,
+    rgba(194, 159, 108, 0.02) 49%,
+    rgba(194, 159, 108, 0.02) 50%,
     transparent 51%,
     transparent 100%
   );
@@ -69,11 +69,11 @@ a {
 }
 
 .glow {
-  text-shadow: 0 0 5px currentColor;
+  text-shadow: none;
 }
 
 .border-glow {
-  box-shadow: 0 0 5px currentColor;
+  box-shadow: none;
 }
 
 /* Scrollbar styling */
@@ -97,11 +97,11 @@ a {
 /* Mobile-specific optimizations */
 @media (max-width: 640px) {
   .border-glow {
-    box-shadow: 0 0 8px currentColor;
+    box-shadow: none;
   }
-  
+
   .glow {
-    text-shadow: 0 0 8px currentColor;
+    text-shadow: none;
   }
   
   /* Better touch targets */
@@ -111,7 +111,7 @@ a {
   
   /* Improved text selection */
   * {
-    -webkit-tap-highlight-color: rgba(0, 255, 0, 0.2);
+    -webkit-tap-highlight-color: rgba(194, 159, 108, 0.2);
   }
   
   /* Prevent zoom on inputs */
