@@ -2,6 +2,7 @@
 
 import React from 'react'
 import ContactForm from './ContactForm'
+import Terminal from './Terminal'
 
 interface ContentDisplayProps {
   currentPath: string
@@ -21,28 +22,22 @@ const ContentDisplay: React.FC<ContentDisplayProps> = ({ currentPath }) => {
                 SOFTWARE ENGINEER
               </div>
             </div>
-            
+
             <div className="text-lg sm:text-xl font-bold glow text-center">
               &gt; SYSTEM STATUS: ONLINE
             </div>
-            
+
             <div className="text-terminal-gray text-center text-sm sm:text-base px-2">
-              Welcome to Shreyansh's digital terminal. I'm a rising senior in Data Science @ Purdue,
+              Welcome to Shreyansh&apos;s digital terminal. I&apos;m a rising senior in Data Science @ Purdue,
               building fast, scalable systems at the edge of AI and engineering.
             </div>
-            
-            <div className="mt-4">
-              <div className="text-sm text-terminal-gray mb-2">QUICK ACCESS:</div>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs sm:text-sm">
-                <div>• Use navigation menu above</div>
-                <div>• Enter terminal mode for commands</div>
-                <div>• Type 'help' for available commands</div>
-                <div>• Navigate with cd, ls, pwd</div>
-              </div>
-            </div>
+
+            <div className="border-t border-terminal-fg opacity-30" />
+
+            <Terminal />
           </div>
         )
-      
+
       case 'about':
         return (
           <div className="space-y-4">
@@ -80,8 +75,8 @@ const ContentDisplay: React.FC<ContentDisplayProps> = ({ currentPath }) => {
             <div className="mt-4">
               <div className="text-terminal-gray">PHILOSOPHY.TXT:</div>
               <div className="text-xs sm:text-sm">
-                "Write code like stories: clear, efficient, and slightly over-engineered."<br/>
-                "Automate. Cache. Parallelize. Repeat."
+                &quot;Write code like stories: clear, efficient, and slightly over-engineered.&quot;<br/>
+                &quot;Automate. Cache. Parallelize. Repeat.&quot;
               </div>
             </div>
             <div className="mt-4">
@@ -92,7 +87,7 @@ const ContentDisplay: React.FC<ContentDisplayProps> = ({ currentPath }) => {
             </div>
           </div>
         )
-      
+
       case 'projects':
         return (
           <div className="space-y-4">
@@ -106,14 +101,13 @@ const ContentDisplay: React.FC<ContentDisplayProps> = ({ currentPath }) => {
               <div className="border border-terminal-fg p-3">
                 <div className="font-bold text-sm sm:text-base">PROJECT_001: Low-Latency C++ Trading Engine</div>
                 <div className="text-xs sm:text-sm text-terminal-gray">
-                  Tech: C++, AF_XDP, Lock-free Queues, Kernel Bypass | Status: COMPLETED | Duration: June 2025 – August 2025
+                  Tech: C++, AF_XDP, Lock-free Queues, Kernel Bypass | Status: COMPLETED | June 2025 – August 2025
                 </div>
                 <div className="text-xs sm:text-sm mt-2">
-                  High-performance trading exchange engineered for ultra-low latency operations. Built with lock-free queues 
-                  and custom memory pools, achieving 200K match events/sec and 1K inserts/sec under synthetic load. 
-                  Implemented kernel network stack bypass using AF_XDP sockets for TX path with custom ethernet frame headers, 
-                  boosting market data throughput from 1.2M to 5.2M updates/sec. Optimized memory pool performance from 
-                  343 to 44 CPU cycles per operation through advanced memory management techniques.
+                  High-performance trading exchange engineered for ultra-low latency operations. Built with lock-free queues
+                  and custom memory pools, achieving 200K match events/sec and 1K inserts/sec under synthetic load.
+                  Implemented kernel network stack bypass using AF_XDP sockets, boosting market data throughput from
+                  1.2M to 5.2M updates/sec. Optimized memory pool from 343 to 44 CPU cycles per operation.
                 </div>
                 <div className="text-xs mt-2">
                   <a href="https://github.com/Shreyansh-t/kernel-bypass-trading-exchange" className="text-terminal-fg hover:text-terminal-white break-all">
@@ -121,9 +115,33 @@ const ContentDisplay: React.FC<ContentDisplayProps> = ({ currentPath }) => {
                   </a>
                 </div>
               </div>
-              
+
               <div className="border border-terminal-fg p-3">
-                <div className="font-bold text-sm sm:text-base">PROJECT_002: BoilerFixIt</div>
+                <div className="font-bold text-sm sm:text-base">PROJECT_002: Video Analyst AI — RAG Chatbot for Video Content Analysis</div>
+                <div className="text-xs sm:text-sm text-terminal-gray">
+                  Tech: Python, FastAPI, React, LangGraph, Qdrant Vector DB, Llama 3.3 (Groq), Whisper AI, HuggingFace | June 2026
+                </div>
+                <div className="text-xs sm:text-sm mt-2 space-y-1">
+                  <div>• Built decoupled, parallel execution graphs using LangGraph to isolate intensive async media ingestion workflows from stateful user chat sessions</div>
+                  <div>• Implemented async FastAPI backend with session-scoped UUID metadata filtering inside Qdrant vector DB to guarantee zero cross-user data leakage</div>
+                  <div>• Developed automated fallback ingestion system via yt-dlp and OpenAI Whisper to process short-form assets lacking native closed-caption tracks</div>
+                </div>
+              </div>
+
+              <div className="border border-terminal-fg p-3">
+                <div className="font-bold text-sm sm:text-base">PROJECT_003: Credify <span className="text-terminal-gray font-normal">— CalHacks Berkeley Hackathon Winner</span></div>
+                <div className="text-xs sm:text-sm text-terminal-gray">
+                  Tech: JavaScript (ES6+), Node.js, Agentic AI Design, Chrome Extensions API, Shadow DOM, MutationObserver | October 2025
+                </div>
+                <div className="text-xs sm:text-sm mt-2 space-y-1">
+                  <div>• Architected an async background service worker utilizing LLM-driven agentic workflows to grade social text content, surface logical discrepancy flags, and return detailed validity matrices</div>
+                  <div>• Engineered high-performance DOM-traversal layers penetrating Reddit&apos;s nested shadow DOM and web-component architectures using the MutationObserver API</div>
+                  <div>• Optimized extension runtime latency via chrome.storage caching, mitigating redundant LLM inference calls and eliminating network round-trip overhead</div>
+                </div>
+              </div>
+
+              <div className="border border-terminal-fg p-3">
+                <div className="font-bold text-sm sm:text-base">PROJECT_004: BoilerFixIt</div>
                 <div className="text-xs sm:text-sm text-terminal-gray">
                   Tech: MERN, Redis, Stripe, Google Maps API | Status: ONGOING
                 </div>
@@ -138,26 +156,9 @@ const ContentDisplay: React.FC<ContentDisplayProps> = ({ currentPath }) => {
                   </a>
                 </div>
               </div>
-              
+
               <div className="border border-terminal-fg p-3">
-                <div className="font-bold text-sm sm:text-base">PROJECT_003: Concurrent Key-Value Caching Engine</div>
-                <div className="text-xs sm:text-sm text-terminal-gray">
-                  Tech: C++, Non-blocking I/O, Event Loops | Status: COMPLETED
-                </div>
-                <div className="text-xs sm:text-sm mt-2">
-                  Redis-like in-memory key-value store using event-driven, non-blocking IO.
-                  Implemented hash tables for O(1) lookups and AVL trees for balanced storage,
-                  optimizing access speed by 40% with efficient connection management.
-                </div>
-                <div className="text-xs mt-2">
-                  <a href="https://github.com/Shreyansh-t/Concurrent-Key-Value-Caching-Engine" className="text-terminal-fg hover:text-terminal-white break-all">
-                    → github.com/Shreyansh-t/Concurrent-Key-Value-Caching-Engine
-                  </a>
-                </div>
-              </div>
-              
-              <div className="border border-terminal-fg p-3">
-                <div className="font-bold text-sm sm:text-base">PROJECT_004: Airbnb Price Tracker</div>
+                <div className="font-bold text-sm sm:text-base">PROJECT_005: Airbnb Price Tracker</div>
                 <div className="text-xs sm:text-sm text-terminal-gray">
                   Tech: Python, Django, Selenium, BeautifulSoup, MySQL | Status: COMPLETED
                 </div>
@@ -175,7 +176,7 @@ const ContentDisplay: React.FC<ContentDisplayProps> = ({ currentPath }) => {
             </div>
           </div>
         )
-      
+
       case 'experience':
         return (
           <div className="space-y-4">
@@ -187,9 +188,25 @@ const ContentDisplay: React.FC<ContentDisplayProps> = ({ currentPath }) => {
             </div>
             <div className="space-y-4">
               <div className="border border-terminal-fg p-3">
+                <div className="font-bold text-sm sm:text-base">SYSTEMS_RESEARCH_INTERN</div>
+                <div className="text-xs sm:text-sm text-terminal-gray">
+                  Analytical Database Lab, University at Buffalo | Under Prof. Zhao | April 2026 – Present
+                </div>
+                <div className="text-xs sm:text-sm mt-2 space-y-1">
+                  <div>• Researching and architecting an Aggregate B-Tree (AB-Tree) index structure within the core C++ codebase of DuckDB to support native, high-performance random indexing and sampling</div>
+                  <div>• Audited and mapped DuckDB&apos;s execution pipeline, analyzing the structural lifecycle of its Adaptive Radix Tree (ART) implementation to design cohesive hook-ins for secondary aggregate indices</div>
+                  <div>• Engineered a high-throughput bulk-loading mechanism for AB-Trees at the database chunk level, ensuring data blocks preserve structural metadata and pre-aggregated values during compilation</div>
+                  <div>• Designing an asynchronous merging pipeline to consolidate chunk-level index structures, optimizing analytical query execution paths for massive OLAP workloads</div>
+                </div>
+                <div className="text-xs mt-2 text-terminal-gray">
+                  Stack: C++, GDB, DuckDB Internals, OLAP Database Systems, Systems Programming
+                </div>
+              </div>
+
+              <div className="border border-terminal-fg p-3">
                 <div className="font-bold text-sm sm:text-base">AI_ENGINEER_INTERN</div>
                 <div className="text-xs sm:text-sm text-terminal-gray">
-                  Company: Legalgini | Location: Gurugram, India | Duration: Jan 2025 – May 2025
+                  Company: Legalgini | Location: Gurugram, India | Jan 2025 – May 2025
                 </div>
                 <div className="text-xs sm:text-sm mt-2">
                   • Optimized CoLBERT-based RAG pipeline, boosting document retrieval accuracy from 70% to 96%<br/>
@@ -197,11 +214,11 @@ const ContentDisplay: React.FC<ContentDisplayProps> = ({ currentPath }) => {
                   • Built hybrid search pipeline with 400ms query latency using bi-encoder and keyword retrieval
                 </div>
               </div>
-              
+
               <div className="border border-terminal-fg p-3">
                 <div className="font-bold text-sm sm:text-base">AUTONOMOUS_SYSTEMS_RESEARCHER</div>
                 <div className="text-xs sm:text-sm text-terminal-gray">
-                  Prof. J.M Goppert - Purdue University | Location: West Lafayette, IN | Duration: Jan 2025 – May 2025
+                  Prof. J.M Goppert — Purdue University | Location: West Lafayette, IN | Jan 2025 – May 2025
                 </div>
                 <div className="text-xs sm:text-sm mt-2">
                   • Designed A*, RRT, and RRT* navigation algorithms for autonomous NARCAN-delivery drone<br/>
@@ -209,11 +226,11 @@ const ContentDisplay: React.FC<ContentDisplayProps> = ({ currentPath }) => {
                   • Reduced computational load by 30% and optimized motion-planning pipeline
                 </div>
               </div>
-              
+
               <div className="border border-terminal-fg p-3">
                 <div className="font-bold text-sm sm:text-base">PROJECT_MANAGER_&_TA</div>
                 <div className="text-xs sm:text-sm text-terminal-gray">
-                  Purdue University | Location: West Lafayette, IN | Duration: Aug 2023 – May 2024
+                  Purdue University | Location: West Lafayette, IN | Aug 2023 – May 2024
                 </div>
                 <div className="text-xs sm:text-sm mt-2">
                   • Led team of 7 researchers conducting market research across 40 states<br/>
@@ -221,11 +238,11 @@ const ContentDisplay: React.FC<ContentDisplayProps> = ({ currentPath }) => {
                   • Managed data pipeline integrating Hugging Face datasets with 100+ manually labeled transcripts
                 </div>
               </div>
-              
+
               <div className="border border-terminal-fg p-3">
                 <div className="font-bold text-sm sm:text-base">DATA_SCIENCE_RESEARCHER</div>
                 <div className="text-xs sm:text-sm text-terminal-gray">
-                  Purdue University | Location: West Lafayette, IN | Duration: Aug 2022 – May 2023
+                  Purdue University | Location: West Lafayette, IN | Aug 2022 – May 2023
                 </div>
                 <div className="text-xs sm:text-sm mt-2">
                   • Analyzed 30,000+ data points per variable for agricultural sensor insights project<br/>
@@ -236,7 +253,7 @@ const ContentDisplay: React.FC<ContentDisplayProps> = ({ currentPath }) => {
             </div>
           </div>
         )
-      
+
       case 'blog':
         return (
           <div className="space-y-4">
@@ -254,7 +271,7 @@ const ContentDisplay: React.FC<ContentDisplayProps> = ({ currentPath }) => {
                 </div>
                 <div className="text-xs sm:text-sm mt-2">
                   A comprehensive guide to building a PDF search engine using ColBERT retrieval system,
-                  LangChain framework, and RAGatouille for efficient document retrieval and Q&A.
+                  LangChain framework, and RAGatouille for efficient document retrieval and Q&amp;A.
                 </div>
                 <div className="text-xs mt-2">
                   <a href="https://arc.net/l/quote/unnqhwbp" target="_blank" rel="noopener noreferrer" className="text-terminal-fg hover:text-terminal-white underline break-all">
@@ -265,7 +282,7 @@ const ContentDisplay: React.FC<ContentDisplayProps> = ({ currentPath }) => {
             </div>
           </div>
         )
-      
+
       case 'contact':
         return (
           <div className="space-y-4">
@@ -282,19 +299,19 @@ const ContentDisplay: React.FC<ContentDisplayProps> = ({ currentPath }) => {
                     <div className="font-bold">EMAIL_ADDRESS:</div>
                     <div className="break-all">stehangu@purdue.edu</div>
                   </div>
-                  
+
                   <div className="mb-4">
                     <div className="font-bold">SOCIAL_LINKS:</div>
                     <div className="break-all">GitHub: <a href="https://github.com/shreyanshtehanguria" target="_blank" rel="noopener noreferrer" className="text-terminal-fg hover:text-terminal-white underline">github.com/shreyanshtehanguria</a></div>
                     <div className="break-all">LinkedIn: <a href="https://linkedin.com/in/shreyanshtehanguria" target="_blank" rel="noopener noreferrer" className="text-terminal-fg hover:text-terminal-white underline">linkedin.com/in/shreyanshtehanguria</a></div>
                   </div>
-                  
+
                   <div className="mb-4">
                     <div className="font-bold">PREFERRED_CONTACT:</div>
                     <div>Email for professional inquiries</div>
                     <div>LinkedIn for networking</div>
                   </div>
-                  
+
                   <div className="mt-6 p-3 border border-terminal-fg">
                     <div className="font-bold">AVAILABILITY:</div>
                     <div className="text-terminal-gray">
@@ -305,12 +322,12 @@ const ContentDisplay: React.FC<ContentDisplayProps> = ({ currentPath }) => {
                   </div>
                 </div>
               </div>
-              
+
               <ContactForm />
             </div>
           </div>
         )
-      
+
       default:
         return (
           <div className="space-y-4">
@@ -335,4 +352,4 @@ const ContentDisplay: React.FC<ContentDisplayProps> = ({ currentPath }) => {
   )
 }
 
-export default ContentDisplay 
+export default ContentDisplay

@@ -2,12 +2,6 @@
 
 import React, { useState, useEffect, useRef } from 'react'
 
-interface TerminalProps {
-  currentPath: string
-  setCurrentPath: (path: string) => void
-  setIsTerminalMode: (mode: boolean) => void
-}
-
 interface Command {
   input: string
   output: string[]
@@ -23,7 +17,8 @@ interface FileSystem {
   [key: string]: FileSystemNode
 }
 
-const Terminal: React.FC<TerminalProps> = ({ currentPath, setCurrentPath, setIsTerminalMode }) => {
+const Terminal: React.FC = () => {
+  const [currentPath, setCurrentPath] = useState('~')
   const [history, setHistory] = useState<Command[]>([])
   const [currentInput, setCurrentInput] = useState('')
   const [historyIndex, setHistoryIndex] = useState(-1)
@@ -36,7 +31,7 @@ const Terminal: React.FC<TerminalProps> = ({ currentPath, setCurrentPath, setIsT
       directories: ['projects', 'experience', 'blog', 'contact']
     },
     'projects': {
-      files: ['trading-engine.cpp', 'boilerfixit.md', 'caching-engine.cpp', 'airbnb-tracker.py', 'README.md'],
+      files: ['trading-engine.cpp', 'video-analyst.py', 'credify.js', 'boilerfixit.md', 'airbnb-tracker.py', 'README.md'],
       directories: ['web-apps', 'systems', 'data-tools']
     },
     'experience': {
@@ -57,67 +52,79 @@ const Terminal: React.FC<TerminalProps> = ({ currentPath, setCurrentPath, setIsT
     help: () => [
       'Available commands:',
       '  ls       - list directory contents',
-      '  cd DIR   - change directory',
+      '  cd DIR   - change directory (experience, projects, blog, contact)',
       '  pwd      - print working directory',
       '  cat FILE - display file contents',
-      '  touch FILE - create/open file',
       '  clear    - clear terminal',
-      '  exit     - exit terminal mode',
+      '  exit     - reset terminal to root',
       '  help     - show this help message'
     ],
-    
+
     ls: () => {
-      // Context-aware listing based on current path
       switch (currentPath) {
         case 'experience':
           return [
             'WORK EXPERIENCE:',
             '================',
             '',
-            '1. AI_ENGINEER_INTERN',
+            '1. SYSTEMS_RESEARCH_INTERN',
+            '   Analytical Database Lab, University at Buffalo | Under Prof. Zhao | April 2026 – Present',
+            '   • Architecting AB-Tree index in DuckDB C++ codebase for high-performance random sampling',
+            '   • Audited DuckDB execution pipeline, analyzing ART implementation lifecycle',
+            '   • Engineered bulk-loading mechanism for AB-Trees at database chunk level',
+            '   • Designing async merging pipeline to optimize OLAP query execution paths',
+            '   Stack: C++, GDB, DuckDB Internals, OLAP Database Systems, Systems Programming',
+            '',
+            '2. AI_ENGINEER_INTERN',
             '   Company: Legalgini | Location: Gurugram, India | Duration: Jan 2025 – May 2025',
             '   • CoLBERT-based RAG pipeline: 70% → 96% accuracy improvement',
             '   • Gemini Flash LLM integration: 40% engagement boost',
             '',
-            '2. AUTONOMOUS_SYSTEMS_RESEARCHER', 
+            '3. AUTONOMOUS_SYSTEMS_RESEARCHER',
             '   Prof. J.M Goppert - Purdue University | Duration: Jan 2025 – May 2025',
             '   • A*, RRT, RRT* navigation algorithms for NARCAN-delivery drone',
             '   • 30% computational load reduction',
             '',
-            '3. PROJECT_MANAGER_&_TA',
+            '4. PROJECT_MANAGER_&_TA',
             '   Purdue University | Duration: Aug 2023 – May 2024',
             '   • Led team of 7 researchers across 40 states',
             '   • LSTM sentiment analysis: 95% accuracy',
             '',
-            '4. DATA_SCIENCE_RESEARCHER',
+            '5. DATA_SCIENCE_RESEARCHER',
             '   Purdue University | Duration: Aug 2022 – May 2023',
             '   • Agricultural sensor data: 30,000+ points per variable',
             '   • Optimized data sampling for processing efficiency'
           ]
-        
+
         case 'projects':
           return [
             'PROJECTS:',
             '=========',
             '',
-            '1. Low-Latency C++ Trading Engine [COMPLETED]',
+            '1. Low-Latency C++ Trading Engine [COMPLETED — Aug 2025]',
             '   Tech: C++, AF_XDP, Lock-free Queues, Kernel Bypass',
             '   → 200K match events/sec, 5.2M market data updates/sec',
-            '   → Memory pool optimization: 343→44 CPU cycles/op',
+            '   → Memory pool: 343→44 CPU cycles/op',
             '',
-            '2. BoilerFixIt [ONGOING]',
+            '2. Video Analyst AI — RAG Chatbot for Video Content Analysis [June 2026]',
+            '   Tech: Python, FastAPI, React, LangGraph, Qdrant, Llama 3.3, Whisper AI',
+            '   → Parallel LangGraph execution graphs isolating async ingestion from chat sessions',
+            '   → Session-scoped UUID filtering in Qdrant for zero cross-user data leakage',
+            '',
+            '3. Credify [CalHacks Berkeley Winner — Oct 2025]',
+            '   Tech: JavaScript (ES6+), Node.js, Chrome Extensions API, Shadow DOM',
+            '   → LLM-driven agentic workflows for social content credibility grading',
+            '   → MutationObserver DOM traversal through Reddit nested shadow DOM',
+            '',
+            '4. BoilerFixIt [ONGOING]',
             '   Tech: MERN, Redis, Stripe, Google Maps API',
             '   → Full-stack platform for Purdue students',
             '',
-            '3. Concurrent Key-Value Caching Engine [COMPLETED]',
-            '   Tech: C++, Non-blocking I/O, Event Loops',
-            '   → 40% performance improvement over standard systems',
-            '',
-            '4. Airbnb Price Tracker [COMPLETED]', 
+            '5. Airbnb Price Tracker [COMPLETED]',
             '   Tech: Python, Django, Selenium, BeautifulSoup, MySQL',
             '   → Monitoring 50+ properties with 12-hour intervals'
           ]
-        
+
         case 'blog':
           return [
             'BLOG POSTS:',
@@ -125,10 +132,9 @@ const Terminal: React.FC<TerminalProps> = ({ currentPath, setCurrentPath, setIsT
             '',
             '1. ColBERT Made Simple: Step-by-Step PDF Search Engine with LangChain and RAGatouille',
             '   Date: Dec 2024 | Category: AI/ML',
-            '   → Comprehensive guide to building PDF search engines',
             '   → Read: https://medium.com/@shreyanshtehanguria'
           ]
-        
+
         case 'contact':
           return [
             'CONTACT INFORMATION:',
@@ -143,35 +149,39 @@ const Terminal: React.FC<TerminalProps> = ({ currentPath, setCurrentPath, setIsT
             '• Response time: 2-4 hours',
             '• Location: West Lafayette, Indiana'
           ]
-        
-        default: // Home directory
+
+        default:
           return [
-            'SHREYANSH TEHANGURIA - PORTFOLIO TERMINAL',
-            '========================================',
+            'SHREYANSH TEHANGURIA — PORTFOLIO TERMINAL',
+            '==========================================',
             '',
             'Rising Senior in Data Science @ Purdue University',
             'SWE by projects, Data Scientist by degree, AI Engineer by experience',
             '',
-            'QUICK NAVIGATION:',
-            '• cd experience  - View work history & skills',
-            '• cd projects    - Explore technical projects', 
-            '• cd blog        - Read technical articles',
+            'DIRECTORIES:',
+            '• cd experience  - Work history & research roles',
+            '• cd projects    - Technical project showcase',
+            '• cd blog        - Technical articles',
             '• cd contact     - Get in touch',
             '',
             'CURRENT FOCUS: AI + Systems intersection, Performance optimization'
           ]
       }
     },
-    
-    pwd: () => [`/${currentPath}`],
-    
+
+    pwd: () => [currentPath === '~' ? '/~' : `/~/${currentPath}`],
+
     cd: (args: string[]) => {
       if (args.length === 0) {
         setCurrentPath('~')
-        return [`Changed to /${currentPath}`]
+        return ['Changed to /~']
       }
-      
+
       const target = args[0]
+      if (target === '~' || target === '/') {
+        setCurrentPath('~')
+        return ['Changed to /~']
+      }
       if (target === '..') {
         if (currentPath !== '~') {
           setCurrentPath('~')
@@ -179,28 +189,27 @@ const Terminal: React.FC<TerminalProps> = ({ currentPath, setCurrentPath, setIsT
         }
         return ['Already at root directory']
       }
-      
+
       const current = fileSystem[currentPath]
       if (current?.directories.includes(target)) {
         setCurrentPath(target)
-        return [`Changed to /${target}`]
+        return [`Changed to /~/${target}`]
       }
-      
+
       return [`cd: ${target}: No such directory`]
     },
-    
+
     cat: (args: string[]) => {
       if (args.length === 0) return ['cat: missing file operand']
-      
+
       const fileName = args[0]
       const current = fileSystem[currentPath]
-      
+
       if (!current?.files.includes(fileName)) {
         return [`cat: ${fileName}: No such file`]
       }
-      
-      // Mock file contents
-      const fileContents = {
+
+      const fileContents: { [key: string]: string[] } = {
         'about.txt': [
           'ABOUT SHREYANSH TEHANGURIA',
           '==========================',
@@ -213,8 +222,6 @@ const Terminal: React.FC<TerminalProps> = ({ currentPath, setCurrentPath, setIsT
           'Obsessed with speed: caching, compilation, compute.',
           'Building at the intersection of AI + Systems.',
           'Passionate about bare metal programming in C++.',
-          'Always learning and reading about enhanced performance and speed.',
-          'Self-taught programmer who loves fast, scalable systems.',
           '',
           'Tech Stack: C++, Python, JavaScript, MERN, PyTorch, Docker',
           'Hobbies: Tennis, Gym, Boxing, Reading about new tech',
@@ -222,16 +229,14 @@ const Terminal: React.FC<TerminalProps> = ({ currentPath, setCurrentPath, setIsT
           'Write code like stories: clear, efficient, slightly over-engineered.'
         ],
         'README.md': [
-          '# Shreyansh Tehanguria - Portfolio Terminal',
-          'Welcome to my interactive portfolio!',
+          '# Shreyansh Tehanguria — Portfolio Terminal',
           'Rising Senior in Data Science @ Purdue University',
           'SWE by projects, Data Scientist by degree, AI Engineer by experience',
           '',
           'Navigate using terminal commands or the menu above.',
-          'Built with Next.js, TypeScript, and Tailwind CSS.',
-          'Obsessed with speed: caching, compilation, compute.'
+          'Built with Next.js, TypeScript, and Tailwind CSS.'
         ],
-        'resume.pdf': ['[Binary file - cannot display]'],
+        'resume.pdf': ['[Binary file — cannot display]'],
         'email.txt': ['stehangu@purdue.edu'],
         'social.txt': ['GitHub: @shreyanshtehanguria', 'LinkedIn: linkedin.com/in/shreyanshtehanguria'],
         'skills.md': [
@@ -239,163 +244,160 @@ const Terminal: React.FC<TerminalProps> = ({ currentPath, setCurrentPath, setIsT
           '## Languages',
           'C++, Python, SQL, JavaScript',
           '## Frameworks & Libraries',
-          'MERN Stack (MongoDB, Express, React, Node.js)',
-          'Django, Flask, FastAPI',
-          'PyTorch, scikit-learn',
-          '## Dev & Infrastructure',
-          'Docker, Redis, PostgreSQL, Git',
-          'Celery, RabbitMQ, Nginx, Jupyter',
+          'MERN Stack, Django, Flask, FastAPI',
+          'PyTorch, scikit-learn, LangGraph',
+          '## Infrastructure',
+          'Docker, Redis, PostgreSQL, Qdrant, Nginx',
           '## Focus Areas',
-          'AI/ML, Full-stack Development, Systems Programming',
-          'Performance Optimization, Caching, Scalability'
+          'AI/ML, Systems Programming, Performance Optimization'
         ],
         'certifications.txt': [
           'CERTIFICATIONS',
           '==============',
           'Docker Foundations Professional Certificate',
-          'Issued by: Docker, Inc.',
-          'Date: June 2025',
-          'Topics: Docker Products, Containerization, Deployment Best Practices'
+          'Issued by: Docker, Inc. | Date: June 2025'
         ],
         'work-history.txt': [
           'WORK HISTORY',
           '============',
           '',
-          '1. AI ENGINEER INTERN | Legalgini (Jan 2025 – May 2025)',
+          '1. SYSTEMS RESEARCH INTERN | Analytical DB Lab, UB (Apr 2026 – Present)',
+          '   Under Prof. Zhao — University at Buffalo',
+          '   • Architecting AB-Tree index in DuckDB C++ for random indexing & sampling',
+          '   • Audited DuckDB execution pipeline and ART implementation lifecycle',
+          '   • Engineered bulk-loading mechanism for AB-Trees at database chunk level',
+          '   • Designing async merging pipeline for OLAP workload optimization',
+          '   Stack: C++, GDB, DuckDB Internals, OLAP Database Systems',
+          '',
+          '2. AI ENGINEER INTERN | Legalgini (Jan 2025 – May 2025)',
           '   Location: Gurugram, India',
           '   • CoLBERT-based RAG pipeline: 70% → 96% accuracy improvement',
           '   • Gemini Flash LLM integration: 40% engagement boost',
           '   • Hybrid search pipeline: 400ms query latency',
           '',
-          '2. AUTONOMOUS SYSTEMS RESEARCHER | Purdue University (Jan 2025 – May 2025)',
-          '   Prof. J.M Goppert - West Lafayette, IN',
-          '   • A*, RRT, RRT* navigation algorithms for NARCAN-delivery drone',
+          '3. AUTONOMOUS SYSTEMS RESEARCHER | Purdue University (Jan 2025 – May 2025)',
+          '   Prof. J.M Goppert — West Lafayette, IN',
+          '   • A*, RRT, RRT* navigation for autonomous NARCAN-delivery drone',
           '   • Intel RealSense 3D point-cloud → 2D occupancy grids',
           '   • 30% computational load reduction',
           '',
-          '3. PROJECT MANAGER & TA | Purdue University (Aug 2023 – May 2024)',
-          '   West Lafayette, IN',
+          '4. PROJECT MANAGER & TA | Purdue University (Aug 2023 – May 2024)',
           '   • Led 7-person research team across 40 states',
           '   • LSTM sentiment analysis: 95% accuracy',
-          '   • Managed Hugging Face + custom dataset pipeline',
           '',
-          '4. DATA SCIENCE RESEARCHER | Purdue University (Aug 2022 – May 2023)',
-          '   West Lafayette, IN',
+          '5. DATA SCIENCE RESEARCHER | Purdue University (Aug 2022 – May 2023)',
           '   • Agricultural sensor data: 30,000+ points per variable',
-          '   • Optimized sampling intervals for processing efficiency',
-          '   • Weather API evaluation and integration',
+          '   • Optimized sampling intervals for processing efficiency'
+        ],
+        'trading-engine.cpp': [
+          '// Low-Latency C++ Trading Engine',
+          '// Tech: C++, AF_XDP, Lock-free Queues, Kernel Bypass',
+          '// GitHub: github.com/Shreyansh-t/kernel-bypass-trading-exchange',
           '',
-          'Current: Rising Senior in Data Science @ Purdue University',
-          'Focus: AI + Systems intersection, Performance optimization'
+          '• 200K match events/sec and 1K inserts/sec under synthetic load',
+          '• Kernel network stack bypass via AF_XDP sockets: 1.2M → 5.2M updates/sec',
+          '• Memory pool optimization: 343 → 44 CPU cycles/operation',
+          '',
+          'Duration: June 2025 – August 2025'
+        ],
+        'video-analyst.py': [
+          '# Video Analyst AI — RAG Chatbot for Video Content Analysis',
+          '# Tech: Python, FastAPI, React, LangGraph, Qdrant, Llama 3.3, Whisper AI',
+          '# Duration: June 2026',
+          '',
+          'Key Features:',
+          '• Decoupled parallel LangGraph execution graphs isolating async media',
+          '  ingestion workflows from stateful user chat sessions',
+          '• FastAPI backend with session-scoped UUID metadata filtering in Qdrant',
+          '  — guarantees zero cross-user data leakage',
+          '• Automated fallback ingestion via yt-dlp + OpenAI Whisper for videos',
+          '  lacking native closed-caption tracks',
+          '',
+          'Stack: Python, FastAPI, React, LangGraph, Qdrant, Llama 3.3 (Groq),',
+          '       Whisper AI, HuggingFace (all-MiniLM-L6-v2)'
+        ],
+        'credify.js': [
+          '// Credify — CalHacks Berkeley Hackathon Winner',
+          '// Tech: JavaScript (ES6+), Node.js, Chrome Extensions API',
+          '// Duration: October 2025',
+          '',
+          'Key Features:',
+          '• LLM-driven agentic workflows grading social text for logical discrepancy',
+          '  flags and validity matrices',
+          '• High-performance DOM traversal penetrating Reddit nested shadow DOM',
+          '  using MutationObserver API',
+          '• chrome.storage caching eliminating redundant LLM inference calls',
+          '  and network round-trip overhead',
+          '',
+          'Award: Winner — CalHacks Berkeley Hackathon, October 2025',
+          'Stack: JavaScript (ES6+), Node.js, Chrome Extensions API, Shadow DOM'
         ],
         'boilerfixit.md': [
           '# BoilerFixIt',
           'Status: ONGOING',
           'Tech: MERN, Redis, Stripe, Google Maps API',
-          'GitHub: https://github.com/Shreyansh-t/Boiler-Fixit',
+          'GitHub: github.com/Shreyansh-t/Boiler-Fixit',
           '',
-          'Full-stack MERN platform streamlining appliance issue reporting for Purdue students.',
-          '',
-          'Key Features:',
           '• Integrated Stripe for secure payments',
           '• Google Maps API for distance-based pricing algorithm',
           '• Redis caching for performance optimization',
-          '• Real-time tracking system',
-          '• Designed for scalability across student communities',
-          '',
-          'Impact: Reduces user journey time and boosts engagement'
-        ],
-        'caching-engine.cpp': [
-          '// Concurrent Key-Value Caching Engine',
-          '// Tech: C++, Non-blocking I/O, Event Loops',
-          '// GitHub: https://github.com/Shreyansh-t/Concurrent-Key-Value-Caching-Engine',
-          '',
-          'Redis-like in-memory key-value store implementation:',
-          '',
-          '• Event-driven, non-blocking IO architecture',
-          '• Socket programming for concurrent client requests',
-          '• Hash tables for O(1) average-time key lookups',
-          '• AVL trees for balanced data storage',
-          '• Core commands: GET, SET, DEL',
-          '• Efficient connection management',
-          '',
-          'Performance: 40% optimization in access speed',
-          'Date: June 2023 – July 2023'
+          '• Real-time tracking system for scalability'
         ],
         'airbnb-tracker.py': [
           '# Airbnb Price Tracker',
           '# Tech: Python, Django, Selenium, BeautifulSoup, MySQL',
-          '# GitHub: https://github.com/Shreyansh-t/Airbnb-Price-Tracker',
+          '# GitHub: github.com/Shreyansh-t/Airbnb-Price-Tracker',
           '',
-          'Price tracking system features:',
-          '',
-          '• Monitor up to 50 properties simultaneously',
-          '• 12-hour update intervals',
+          '• Monitor up to 50 properties simultaneously, 12-hour intervals',
           '• Django REST API with 8 endpoints',
           '• Celery for asynchronous daily price checks',
-          '• Optimized SQLite database schema',
-          '• Location-based queries and occupancy filtering',
+          '• Optimized SQLite schema for query performance',
           '',
-                     'Built for third-party integrations and fast query performance',
-           'Date: May 2024 – June 2024'
-         ],
-         'contact-form.txt': [
-           'CONTACT FORM',
-           '============',
-           'Interactive contact form available on website',
-           'Location: Contact section',
-           '',
-           'Form fields:',
-           '• Name',
-           '• Email', 
-           '• Subject',
-           '• Message',
-           '',
-                       'Messages sent directly to: stehangu@purdue.edu',
-            'Response time: 2-4 hours'
-         ],
-         'availability.txt': [
-           'AVAILABILITY STATUS',
-           '==================',
-           'Current: Rising Senior @ Purdue University (Data Science)',
-           'Location: West Lafayette, Indiana',
-           '',
-           'SEEKING:',
-           '• Internships (Summer 2025, Fall 2025)',
-           '• Full-time roles (Starting 2026)',
-           '',
-           'TARGET ROLES:',
-           '• Software Engineering (SWE)',
-           '• Machine Learning Engineer (ML)',
-           '• Data Scientist (DS)', 
-           '• AI Engineer (AI)',
-           '',
-           'FOCUS AREAS:',
-           '• AI + Systems intersection',
-           '• Performance optimization',
-           '• Scalable system design',
-           '',
-                       'Contact: stehangu@purdue.edu',
-            'Response time: 2-4 hours'
-         ]
+          'Date: May 2024 – June 2024'
+        ],
+        'contact-form.txt': [
+          'CONTACT FORM',
+          '============',
+          'Interactive contact form available in the Contact section.',
+          '',
+          'Form fields: Name, Email, Subject, Message',
+          'Delivered to: stehangu@purdue.edu',
+          'Response time: 2-4 hours'
+        ],
+        'availability.txt': [
+          'AVAILABILITY STATUS',
+          '==================',
+          'Current: Rising Senior @ Purdue University (Data Science)',
+          'Location: West Lafayette, Indiana',
+          '',
+          'SEEKING:',
+          '• Internships (Fall 2025, Summer 2026)',
+          '• Full-time roles (Starting 2026)',
+          '',
+          'TARGET ROLES: SWE, ML Engineer, Data Scientist, AI Engineer',
+          'FOCUS: AI + Systems intersection, Performance optimization',
+          '',
+          'Contact: stehangu@purdue.edu'
+        ]
       }
-      
-      return fileContents[fileName as keyof typeof fileContents] || ['[File content not available]']
+
+      return fileContents[fileName] || ['[File content not available]']
     },
-    
+
     touch: (args: string[]) => {
       if (args.length === 0) return ['touch: missing file operand']
       return [`Created/accessed: ${args[0]}`]
     },
-    
+
     clear: () => {
       setHistory([])
       return []
     },
-    
+
     exit: () => {
-      setIsTerminalMode(false)
-      return ['Exiting terminal mode...']
+      setHistory([])
+      setCurrentPath('~')
+      return []
     }
   }
 
@@ -403,26 +405,26 @@ const Terminal: React.FC<TerminalProps> = ({ currentPath, setCurrentPath, setIsT
     const parts = input.trim().split(' ')
     const command = parts[0].toLowerCase()
     const args = parts.slice(1)
-    
+
     if (command === '') return []
-    
+
     if (commands[command as keyof typeof commands]) {
-      return commands[command as keyof typeof commands](args)
+      return (commands[command as keyof typeof commands] as (args: string[]) => string[])(args)
     }
-    
-    return [`Command not found: ${command}. Type 'help' for available commands.`]
+
+    return [`command not found: ${command}. Type 'help' for available commands.`]
   }
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    
+
     const output = executeCommand(currentInput)
     const newCommand: Command = {
       input: currentInput,
       output,
       path: currentPath
     }
-    
+
     setHistory(prev => [...prev, newCommand])
     setCurrentInput('')
     setHistoryIndex(-1)
@@ -461,36 +463,38 @@ const Terminal: React.FC<TerminalProps> = ({ currentPath, setCurrentPath, setIsT
     }
   }, [])
 
+  const promptPath = currentPath === '~' ? '~' : `~/${currentPath}`
+
   return (
-    <div className="border border-terminal-fg border-glow bg-terminal-bg p-3 sm:p-4 h-80 sm:h-96 overflow-hidden">
-      <div className="text-xs mb-2 text-terminal-gray">
-        TERMINAL v1.0 - Type 'help' for commands
+    <div className="bg-transparent" onClick={() => inputRef.current?.focus()}>
+      <div className="text-xs mb-3 text-terminal-gray">
+        TERMINAL v1.0 — Type &apos;help&apos; for commands | &apos;ls&apos; to explore | &apos;cd DIR&apos; to navigate
       </div>
-      
-      <div 
+
+      <div
         ref={terminalRef}
-        className="h-64 sm:h-80 overflow-y-auto scrollbar-thin scrollbar-thumb-terminal-fg"
+        className="max-h-64 overflow-y-auto scrollbar-thin scrollbar-thumb-terminal-fg"
       >
         {history.map((cmd, index) => (
           <div key={index} className="mb-2">
             <div className="flex items-center flex-wrap text-xs sm:text-sm">
-              <span className="text-terminal-gray mr-1 sm:mr-2">shreyansh@portfolio:</span>
-              <span className="text-terminal-fg mr-1 sm:mr-2">/{cmd.path}</span>
-              <span className="text-terminal-gray mr-1 sm:mr-2">$</span>
+              <span className="text-terminal-gray mr-1">shreyansh@system:</span>
+              <span className="text-terminal-fg mr-1">{cmd.path === '~' ? '~' : `~/${cmd.path}`}</span>
+              <span className="text-terminal-gray mr-2">$</span>
               <span className="text-terminal-white break-all">{cmd.input}</span>
             </div>
             {cmd.output.map((line, lineIndex) => (
-              <div key={lineIndex} className="text-terminal-fg ml-2 sm:ml-4 text-xs sm:text-sm break-all">
+              <div key={lineIndex} className="text-terminal-fg ml-4 text-xs sm:text-sm break-all whitespace-pre-wrap">
                 {line}
               </div>
             ))}
           </div>
         ))}
-        
+
         <form onSubmit={handleSubmit} className="flex items-center flex-wrap text-xs sm:text-sm">
-          <span className="text-terminal-gray mr-1 sm:mr-2">shreyansh@portfolio:</span>
-          <span className="text-terminal-fg mr-1 sm:mr-2">/{currentPath}</span>
-          <span className="text-terminal-gray mr-1 sm:mr-2">$</span>
+          <span className="text-terminal-gray mr-1">shreyansh@system:</span>
+          <span className="text-terminal-fg mr-1">{promptPath}</span>
+          <span className="text-terminal-gray mr-2">$</span>
           <input
             ref={inputRef}
             type="text"
@@ -507,4 +511,4 @@ const Terminal: React.FC<TerminalProps> = ({ currentPath, setCurrentPath, setIsT
   )
 }
 
-export default Terminal 
+export default Terminal
