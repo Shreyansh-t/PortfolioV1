@@ -193,13 +193,10 @@ const ContentDisplay: React.FC<ContentDisplayProps> = ({ currentPath }) => {
                   Analytical Database Lab, University at Buffalo | Under Prof. Zhao | April 2026 – Present
                 </div>
                 <div className="text-xs sm:text-sm mt-2 space-y-1">
-                  <div>• Researching and architecting an Aggregate B-Tree (AB-Tree) index structure within the core C++ codebase of DuckDB to support native, high-performance random indexing and sampling</div>
-                  <div>• Audited and mapped DuckDB&apos;s execution pipeline, analyzing the structural lifecycle of its Adaptive Radix Tree (ART) implementation to design cohesive hook-ins for secondary aggregate indices</div>
-                  <div>• Engineered a high-throughput bulk-loading mechanism for AB-Trees at the database chunk level, ensuring data blocks preserve structural metadata and pre-aggregated values during compilation</div>
-                  <div>• Designing an asynchronous merging pipeline to consolidate chunk-level index structures, optimizing analytical query execution paths for massive OLAP workloads</div>
-                </div>
-                <div className="text-xs mt-2 text-terminal-gray">
-                  Stack: C++, GDB, DuckDB Internals, OLAP Database Systems, Systems Programming
+                  <div>• Researching an Aggregate B-Tree (AB-Tree) index structure within the core C++ codebase of DuckDB to support native, high-performance random indexing and sampling</div>
+                  <div>• Mapped DuckDB&apos;s execution pipeline, using GDB to trace the structural lifecycle of its Adaptive Radix Tree (ART) implementation to design cohesive hook-ins for secondary aggregate indices</div>
+                  <div>• Analyzed and evaluated the database&apos;s existing chunk-level bulk-loading process for AB-Trees to understand how data blocks preserve structural metadata and pre-aggregated values during compilation</div>
+                  <div>• Developing an asynchronous merging pipeline to consolidate these chunk-level bulk-loaded index structures, optimizing analytical query execution paths for massive OLAP workloads</div>
                 </div>
               </div>
 
