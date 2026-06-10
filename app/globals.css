@@ -10,32 +10,89 @@
   padding: 0;
 }
 
-html {
-  scroll-behavior: smooth;
-  overflow-x: hidden;
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: #0B0D0E;
 }
 
 body {
-  background: #111315;
-  color: #E8E3D8;
+  color: #E8E0C8;
   font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   font-size: 16px;
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  min-height: 100vh;
 }
 
-::-webkit-scrollbar { width: 6px; }
-::-webkit-scrollbar-track { background: #111315; }
-::-webkit-scrollbar-thumb { background: rgba(200, 169, 106, 0.3); border-radius: 3px; }
-::-webkit-scrollbar-thumb:hover { background: rgba(200, 169, 106, 0.5); }
+/* Custom scrollbar for window content areas */
+.os-scroll::-webkit-scrollbar { width: 5px; height: 5px; }
+.os-scroll::-webkit-scrollbar-track { background: transparent; }
+.os-scroll::-webkit-scrollbar-thumb { background: rgba(201,169,93,0.2); border-radius: 3px; }
+.os-scroll::-webkit-scrollbar-thumb:hover { background: rgba(201,169,93,0.4); }
+
+/* Boot cursor blink */
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+.boot-cursor { display: inline-block; animation: blink 1s step-end infinite; }
+
+/* Window animations */
+@keyframes windowOpen {
+  from { opacity: 0; transform: scale(0.96) translateY(4px); }
+  to   { opacity: 1; transform: scale(1)    translateY(0); }
+}
+@keyframes backdropIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* Split panel layout (Experience / Projects windows) */
+.os-split {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+}
+.os-split-sidebar {
+  display: flex;
+  flex-direction: row;
+  overflow-x: auto;
+  overflow-y: hidden;
+  border-bottom: 1px solid rgba(201,169,93,0.15);
+  background: #141412;
+  flex-shrink: 0;
+  min-height: 48px;
+  max-height: 56px;
+}
+.os-split-main {
+  flex: 1;
+  overflow: auto;
+  min-width: 0;
+  min-height: 0;
+}
+
+@media (min-width: 580px) {
+  .os-split { flex-direction: row; }
+  .os-split-sidebar {
+    flex-direction: column;
+    width: 188px;
+    min-width: 188px;
+    max-height: none;
+    min-height: 0;
+    border-bottom: none;
+    border-right: 1px solid rgba(201,169,93,0.15);
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+}
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
   }
 }

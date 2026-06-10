@@ -2,7 +2,7 @@ import './globals.css'
 import React from 'react'
 
 export const metadata = {
-  title: 'Shreyansh Tehanguria — Software Engineer',
+  title: 'ShreyanshOS — Shreyansh Tehanguria',
   description: 'Software engineer focused on databases, C++, systems, full-stack products, and applied machine learning.',
 }
 
