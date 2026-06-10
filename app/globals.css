@@ -4,125 +4,77 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
 
-:root {
-  --terminal-bg: #1A1610;
-  --terminal-fg: #C29F6C;
-  --terminal-white: #E8D5B0;
-  --terminal-gray: #8B7355;
-}
-
-* {
+/* ── Reset ─────────────────────────────────────────────────────────── */
+*, *::before, *::after {
   box-sizing: border-box;
-  padding: 0;
   margin: 0;
+  padding: 0;
 }
 
-html,
-body {
-  max-width: 100vw;
-  overflow-x: hidden;
+html, body {
+  height: 100%;
+  overflow: hidden;
+  background: #000000;
+  color: #FFB000;
   font-family: 'Share Tech Mono', 'Courier New', monospace;
-  background-color: var(--terminal-bg);
-  color: var(--terminal-fg);
+  -webkit-font-smoothing: none;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-body {
-  color: var(--terminal-fg);
-  background: var(--terminal-bg);
+/* ── CRT amber glow on text ─────────────────────────────────────────── */
+.crt-glow {
+  text-shadow:
+    0 0 4px rgba(255, 176, 0, 0.8),
+    0 0 10px rgba(255, 176, 0, 0.4),
+    0 0 20px rgba(255, 176, 0, 0.15);
 }
 
-a {
-  color: inherit;
-  text-decoration: none;
+/* ── Scrollbar styling ──────────────────────────────────────────────── */
+::-webkit-scrollbar        { width: 4px; }
+::-webkit-scrollbar-track  { background: #000; }
+::-webkit-scrollbar-thumb  { background: #3A2800; border-radius: 2px; }
+::-webkit-scrollbar-thumb:hover { background: #7A5200; }
+
+/* ── Hex block hover glow animation ────────────────────────────────── */
+@keyframes blockPulse {
+  0%, 100% { box-shadow: 0 0 6px rgba(255,176,0,0.2); }
+  50%       { box-shadow: 0 0 18px rgba(255,176,0,0.5); }
 }
 
-.terminal-cursor {
-  animation: blink 1s infinite;
+/* ── WAL entry flash on new append ─────────────────────────────────── */
+@keyframes walFlash {
+  0%   { background: rgba(255,176,0,0.15); }
+  100% { background: transparent; }
 }
 
-@keyframes blink {
-  0%, 50% { opacity: 1; }
-  51%, 100% { opacity: 0; }
+.wal-entry-new {
+  animation: walFlash 0.6s ease-out forwards;
 }
 
-.scanlines {
-  position: relative;
+/* ── CRT phosphor flicker on full screen ────────────────────────────── */
+@keyframes flicker {
+  0%   { opacity: 1; }
+  92%  { opacity: 1; }
+  93%  { opacity: 0.85; }
+  94%  { opacity: 1; }
+  96%  { opacity: 0.9; }
+  100% { opacity: 1; }
 }
 
-.scanlines::before {
+body::after {
   content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: linear-gradient(
-    transparent 0%,
-    transparent 48%,
-    rgba(194, 159, 108, 0.02) 49%,
-    rgba(194, 159, 108, 0.02) 50%,
-    transparent 51%,
-    transparent 100%
-  );
-  background-size: 100% 4px;
+  position: fixed;
+  inset: 0;
   pointer-events: none;
+  z-index: 9999;
+  animation: flicker 6s infinite;
+  /* Very faint overall CRT grain */
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
 }
 
-.glow {
-  text-shadow: none;
-}
-
-.border-glow {
-  box-shadow: none;
-}
-
-/* Scrollbar styling */
-::-webkit-scrollbar {
-  width: 8px;
-}
-
-::-webkit-scrollbar-track {
-  background: var(--terminal-bg);
-}
-
-::-webkit-scrollbar-thumb {
-  background: var(--terminal-fg);
-  border-radius: 4px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: var(--terminal-white);
-}
-
-/* Mobile-specific optimizations */
-@media (max-width: 640px) {
-  .border-glow {
-    box-shadow: none;
-  }
-
-  .glow {
-    text-shadow: none;
-  }
-  
-  /* Better touch targets */
-  button, input, textarea {
-    min-height: 44px;
-  }
-  
-  /* Improved text selection */
-  * {
-    -webkit-tap-highlight-color: rgba(194, 159, 108, 0.2);
-  }
-  
-  /* Prevent zoom on inputs */
-  input[type="text"],
-  input[type="email"],
-  textarea {
-    font-size: 16px;
-  }
-  
-  /* Improved scrolling */
-  body {
-    -webkit-overflow-scrolling: touch;
-  }
-} 
+/* ── Utility: amber text variants ───────────────────────────────────── */
+.text-amber-primary   { color: #FFB000; }
+.text-amber-dim       { color: #7A5200; }
+.text-amber-bright    { color: #FFD040; }
+.text-commit-green    { color: #00CC33; }
+.text-rollback-red    { color: #CC2222; }

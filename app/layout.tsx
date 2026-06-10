@@ -2,8 +2,8 @@ import './globals.css'
 import React from 'react'
 
 export const metadata = {
-  title: 'Shreyansh Tehanguria - Terminal Portfolio',
-  description: 'Shreyansh Tehanguria - Software Engineer. A retro 1980s computer terminal themed portfolio website',
+  title: 'CORE_DUMP :: Shreyansh Tehanguria',
+  description: 'Hex-Dump Brutalist portfolio with Write-Ahead Log navigation. Systems & AI Engineer.',
 }
 
 export const viewport = {
